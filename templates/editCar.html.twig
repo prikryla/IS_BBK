@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Editovat auto {% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3 class=>Editovat auto</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.carName) }}
+
+                    {{ form_row(form.spz) }}
+
+                    {{ form_row(form.numberOfSeats) }}
+
+                    {{ form_row(form.driverFirstName) }}
+
+                    {{ form_row(form.driverLastName) }}
+                </div>
+            </div>
+                <a href="{{ path('show-cars')}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                &nbsp;
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Tým{% endblock %}
+
+{% block body %}
+    <div class="container-fluid ">
+                {% if app.user.getCategoryId == 2 %}
+                    <h3>Tým U12</h3>
+                {% elseif app.user.getCategoryId == 3 %}
+                    <h3>Tým U15</h3>
+                {% elseif app.user.getCategoryId == 4 %}
+                    <h3>Tým U17</h3>
+                {% elseif app.user.getCategoryId == 5 %}
+                    <h3>Tým U19/U20</h3>
+                {% elseif app.user.getCategoryId == 1 %}
+                    <h3>Tým</h3>
+                {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COACH') %}
+            <a href="{{ path('add-user-team', {'userId': app.user.getId()}) }}" class="btn btn-primary btn-sm" style="font-weight: bold">Přidat hráče</a>
+            <a href="{{ path('show-all-fines') }}" class="btn btn-danger btn-sm" style="font-weight: bold">Nezaplacené pokuty</a>
+        {% endif %}
+        <table class="unstriped margin-top-1" id="table_team">
+            <thead>
+                <tr class="row align-center">
+                    <th class="column small-2 text-center">Kategorie</th>
+                    <th class="column small-2 text-center">Jméno</th>
+                    <th class="column small-2 text-center ">Příjmení</th>
+                    <th class="column small-3 text-center">Datum narození</th>
+                    <th class="column small-2 text-center" style="margin-left: 5px">Možnosti</th>
+                </tr>
+            </thead>
+            <tbody id="table_team">
+            {% for user in members %}
+                <tr class="row align-center" style="margin-top: 2px">
+                        {% if user.categoryId == 2 %}
+                            <td class="column small-2 text-center">U12</td>
+                        {% elseif user.categoryId == 3 %}
+                            <td class="column small-2 text-center">U15</td>
+                        {% elseif user.categoryId == 4 %}
+                            <td class="column small-2 text-center">U17</td>
+                        {% elseif user.categoryId == 5 %}
+                            <td class="column small-2 text-center">U19/U20</td>
+                        {% elseif user.categoryId == 1 %}
+                            <td class="column small-2 text-center">Admin</td>
+                        {% endif %}
+                    <td class="column small-2 text-center">{{ user.firstName }}</td>
+                    <td class="column small-2 text-center">{{ user.lastName }}</td>
+                    <td class="column small-3 text-center">{{ user.dateOfBirth }}</td>
+                    <td class="column small-2 text-center">
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COACH') %}
+                            <a href="{{ path('user-profile', {'userId' : user.id}) }}" style="font-weight: bold">Detail hráče</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_PLAYER') %}
+                            <a href="{{ path('user-detail-team', {'userId' : user.id}) }}" style="font-weight: bold">Detail hráče</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('delete-user', {'userId' : user.id, 'usersId' : app.user.getId()}) }}" style="color: red; font-weight: bold">Odstranit</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_COACH') %}
+                            <a href="{{ path('delete-user-team', {'userId' : user.id, 'usersId' : app.user.getId()}) }}" style="color: red; font-weight: bold">Odstranit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

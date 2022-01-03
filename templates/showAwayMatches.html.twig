@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Výjezdy{% endblock %}
+
+{% block body %}
+    <div class="grid-container">
+        <div class="cell large-10">
+            <h3>Výjezdy - venkovní zápasy</h3>
+            <table class=" unstriped margin-top-1"  id="table_away_matches">
+                <thead>
+                    <tr class="row align-center">
+                        <th class="columns small-2 text-center">Kategorie</th>
+                        <th class="columns small-2 text-center">Domácí tým</th>
+                        <th class="columns small-2 text-center">Hostující tým</th>
+                        <th class="columns small-2 text-center">Čas</th>
+                        <th class="columns small-2 text-center">Adresa</th>
+                        <th class="columns small-2 text-center"></th>
+                    </tr>
+                </thead>
+                <tbody id="table_away_matches">
+                {% for match in matches %}
+                    <tr class="row align-center">
+                        {% if match.categoryId == 2 %}
+                            <td class="columns small-2 text-center">U12</td>
+                        {% elseif match.categoryId == 3 %}
+                            <td class="columns small-2 text-center">U15</td>
+                        {% elseif match.categoryId == 4 %}
+                            <td class="columns small-2 text-center">U17</td>
+                        {% elseif match.categoryId == 5 %}
+                            <td class="columns small-2 text-center">U19/U20</td>
+                        {% endif %}
+                        <td class="columns small-2 text-center">{{ match.homeTeam }}</td>
+                        <td class="columns small-2 text-center">{{ match.awayTeam }}</td>
+                        <td class="columns small-2 text-center">{{ match.matchTime| date('H:i')}}</td>
+                        <td class="columns small-2 text-center">{{ match.address }}, {{ match.city }}</td>
+                        <td class="columns small-2 text-center" ><a href="{{ path('create-nomination', {'matchId': match.id}) }}" style="font-weight: bold">Nominace</a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a href="{{ path('show-matches') }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

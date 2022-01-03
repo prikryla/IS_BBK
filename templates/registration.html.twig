@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="no-js" lang="cs">
+<head>
+    <title>{% block title %}{% endblock %}IS BBK Blansko</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+
+    <!-- Compressed JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <!-- foundation-float.min.css: Compressed CSS with legacy Float Grid -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-float.min.css" integrity="sha256-4ldVyEvC86/kae2IBWw+eJrTiwNEbUUTmN0zkP4luL4=" crossorigin="anonymous">
+
+    <!-- foundation-prototype.min.css: Compressed CSS with prototyping classes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-prototype.min.css" integrity="sha256-BiKflOunI0SIxlTOOUCQ0HgwXrRrRwBkIYppEllPIok=" crossorigin="anonymous">
+
+    <!-- foundation-rtl.min.css: Compressed CSS with right-to-left reading direction -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-rtl.min.css" integrity="sha256-F+9Ns8Z/1ZISonBbojH743hsmF3x3AlQdJEeD8DhQsE=" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3>Registrace</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                            {{ form_label(form.username) }}
+                            {{ form_widget(form.username) }}
+
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+
+                            {{ form_label(form.firstName) }}
+                            {{ form_widget(form.firstName) }}
+
+                            {{ form_label(form.lastName) }}
+                            {{ form_widget(form.lastName) }}
+
+                            {{ form_label(form.plainPassword.first) }}
+                            {{ form_widget(form.plainPassword.first) }}
+
+                            {{ form_label(form.plainPassword.second) }}
+                            {{ form_widget(form.plainPassword.second) }}
+
+                            {{ form_label(form.address) }}
+                            {{ form_widget(form.address) }}
+
+                            {{ form_label(form.city) }}
+                            {{ form_widget(form.city) }}
+                </div>
+                <div class="cell medium-6">
+                            {{ form_label(form.postalCode) }}
+                            {{ form_widget(form.postalCode) }}
+
+                            {{ form_label(form.school) }}
+                            {{ form_widget(form.school) }}
+
+                            {{ form_label(form.dateOfBirth) }}
+                            {{ form_widget(form.dateOfBirth) }}
+
+                            {{ form_label(form.phoneNumberPlayer) }}
+                            {{ form_widget(form.phoneNumberPlayer) }}
+
+                            {{ form_label(form.phoneNumberMother) }}
+                            {{ form_widget(form.phoneNumberMother) }}
+
+                            {{ form_label(form.phoneNumberFather) }}
+                            {{ form_widget(form.phoneNumberFather) }}
+
+                            {{ form_label(form.category)}}
+                            {{ form_widget(form.category)}}
+                </div>
+                <div class="cell show-for-large large-3"></div>
+                <div class="cell text-center medium-12 large-6">
+                    <a href="{{ path('login') }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary', 'style': 'font-weight: bold'}}) }}
+                </div>
+                <div class="cell show-for-large large-3"></div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

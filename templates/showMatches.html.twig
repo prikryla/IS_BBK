@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Všechny zápasy{% endblock %}
+
+{% block body %}
+    <div class="grid-container">
+        <div class="cell large-12">
+            <h3>Zápasy</h3>
+            <a href="{{ path('show-matches-u12') }}" class="btn btn-primary btn-sm" style="font-weight: bold">U12</a>
+            <a href="{{ path('show-matches-u15') }}" class="btn btn-primary btn-sm" style="font-weight: bold">U15</a>
+            <a href="{{ path('show-matches-u17') }}" class="btn btn-primary btn-sm" style="font-weight: bold">U17</a>
+            <a href="{{ path('show-matches-u19/u20') }}" class="btn btn-primary btn-sm" style="font-weight: bold">U19/U20</a>
+            <br>
+            <a href="{{ path('show-away-matches') }}" class="btn btn-secondary btn-sm" style="margin-top: 7px; font-weight: bold">Výjezdy</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('add-match') }}" class="btn btn-success btn-sm" style="margin-top: 7px; font-weight: bold">Přidat zápasy</a>
+            {% endif %}
+            <table class=" unstriped margin-top-1"  id="table_all_matches">
+                <thead>
+                    <tr class="row align-center">
+                        <th class="columns small-2 text-center">Kategorie</th>
+                        <th class="columns small-2 text-center">Domácí tým</th>
+                        <th class="columns small-2 text-center">Hostující tým</th>
+                        <th class="columns small-2 text-center">Datum a čas</th>
+                        <th class="columns small-2 text-center">Adresa</th>
+                        <th class="columns small-2 text-center">Akce</th>
+                    </tr>
+                </thead>
+                <tbody id="table_all_matches">
+                {% for match in matches %}
+                    <tr class="row align-center">
+                        {% if match.categoryId == 2 %}
+                            <td class="columns small-2 text-center">U12</td>
+                        {% elseif match.categoryId == 3 %}
+                            <td class="columns small-2 text-center">U15</td>
+                        {% elseif match.categoryId == 4 %}
+                            <td class="columns small-2 text-center">U17</td>
+                        {% elseif match.categoryId == 5 %}
+                            <td class="columns small-2 text-center">U19/U20</td>
+                        {% endif %}
+                        <td class="columns small-2 text-center">{{ match.homeTeam }}</td>
+                        <td class="columns small-2 text-center">{{ match.awayTeam }}</td>
+                        <td class="columns small-2 text-center">{{ match.matchTime| date('d.m.Y H:i')}}</td>
+                        <td class="columns small-2 text-center">{{ match.address }}, {{ match.city }}</td>
+                        <td class="columns small-2 text-center" >
+                            {% if match.getCategoryId == user.getCategoryId() %}
+                                <a href="{{ path('create-nomination', {'matchId': match.id}) }}" style="font-weight: bold">Nominace</a>
+                                <a href="{{ path('show-detail-match', {'matchId': match.id}) }}" style="font-weight: bold; color: green">Detail</a>
+                            {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('edit-match', {'matchId': match.id}) }}" style="font-weight: bold">Editovat</a>
+                            <a href="{{ path('delete-match', {'matchId': match.id}) }}" style="font-weight: bold; color: red">Smazat</a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

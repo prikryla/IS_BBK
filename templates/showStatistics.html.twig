@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Všechny statistiky {% endblock %}
+
+{% block body %}
+    <div class="grid-container d-flex justify-content-center">
+        <div class="cell large-10">
+            <h3>Všechny statistiky</h3>
+                <a href="{{ path('create-statistics') }}" class="btn btn-primary btn-sm" style="font-weight: bold">Vytvořit novou statistiku</a>
+            <table class="unstriped"  id="table_statistics" style="margin-top: 1em">
+                <thead>
+                    <tr class="row align-center ">
+                        <th class="column small-2 text-center">Id uživatele</th>
+                        <th class="column small-2 text-center">Úspěšné TH</th>
+                        <th class="column small-2 text-center">Neúspěšné TH</th>
+                        <th class="column small-2 text-center">Dva body</th>
+                        <th class="column small-2 text-center">Tři body</th>
+                        <th class="column small-2 text-center">Body celkem</th>
+                    </tr>
+                </thead>
+                <tbody id="table_statistics">
+                {% for stats in statistics %}
+                    <tr class="row align-center">
+                        <td class="column small-2 text-center">{{ stats.usersId }}</td>
+                        <td class="column small-2 text-center">{{ stats.successfulFt }}</td>
+                        <td class="column small-2 text-center">{{ stats.unsuccessfulFt }}</td>
+                        <td class="column small-2 text-center">{{ stats.twoPoints}}</td>
+                        <td class="column small-2 text-center">{{ stats.threePoints }}</td>
+                        <td class="column small-2 text-center">{{ stats.points }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

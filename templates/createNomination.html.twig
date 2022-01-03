@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Nominace {{ match.getHomeTeam() }} - {{ match.getAwayTeam() }}{% endblock  %}
+
+{% block body %}
+    <div class="container-fluid" style="padding-right: 30%">
+        <h3>Nominace {{ match.getHomeTeam() }} - {{ match.getAwayTeam() }}</h3>
+        <table class="unstriped margin-top-1 text-center" id="table_nomination">
+            <thead>
+                <tr class="row align-center">
+                    <th class="column small-2 text-center" style="margin-left: 3em">Jméno</th>
+                    <th class="column small-2 text-center ">Příjmení</th>
+                    <th class="column small-3 text-center">Status</th>
+                    {% if is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN') %}
+                        <th class="column small-3 text-center">Akce</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody id="table_nomination">
+                {% for player in team %}
+                    <tr class="row align-center" style="margin-top: 2px">
+                        <td class="column small-2 text-center" style="margin-left: 3em">{{ player.firstName }}</td>
+                        <td class="column small-2 text-center">{{ player.lastName }}</td>
+                        <td class="column small-3 text-center">
+                    {% for nom in nomination %}
+                            {% if player.id == nom.usersId %}
+                                <p style="color: green; font-weight: bold">Potvrzeno</p>
+                            {% endif %}
+                    {% endfor %}
+                        </td>
+                        {% if is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN') %}
+                            <td class="column small-3 text-center">
+                                    <a href="{{ path('submit-nomination', {'matchId': match.getId(), 'userId': player.id}) }}" style="font-weight: bold">Nominovat</a>
+                                    <a href="{{ path('delete-nomination', {'matchId': match.getId(), 'userId': player.id}) }}" style="font-weight: bold; color: red">Zrušit</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a href="{{ path('show-matches') }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+        </div>
+    </div>
+{% endblock %}

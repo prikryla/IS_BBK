@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Editovat zápas {{ match.homeTeam }} - {{ match.awayTeam }}{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3 class="text-center">Editovat zápas {{ match.homeTeam }} - {{ match.awayTeam }}</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.homeTeam) }}
+
+                    {{ form_row(form.awayTeam) }}
+
+                    {{ form_row(form.matchTime) }}
+
+                    {{ form_row(form.address) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.city) }}
+
+                    {{ form_row(form.venue) }}
+
+                    {{ form_row(form.postalCode) }}
+
+                    {{ form_row(form.category) }}
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('show-matches')}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                &nbsp;
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

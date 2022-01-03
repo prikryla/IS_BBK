@@ -4,15 +4,36 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    encoders:
+        App\Entity\Users:
+            algorithm: sha512
     providers:
         users_in_memory: { memory: null }
+        our_db_provider:
+            entity:
+                class: App\Entity\Users
+                property: username
+    session_fixation_strategy: none
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: our_db_provider
+            pattern: ^/
+            http_basic: ~
+            entry_point: App\Security\LoginFormAuthenticator
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: logout
+                target: login
+            form_login:
+                login_path: login
+                default_target_path: homepage
+                failure_path: user_registration
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -25,3 +46,5 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/home, roles: [ROLE_ADMIN, ROLE_PLAYER, ROLE_COACH] }

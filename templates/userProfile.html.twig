@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Profil uživatele {{ user.getUsername() }} {% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3 class="mt-1">Profil uživatele {{ user.getFirstName() }} {{ user.getLastName() }}</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell" style="width: 60%;">
+                    <table class="unstriped">
+                        <thead>
+                            <th class="column medium-10 text-left">Uživatelské jméno:</th>
+                            <th class="text-right">{{ user.getUsername() }}</th>
+                        </thead>
+                        <tablebody>
+                            <tr>
+                                <td class="column medium-9 text-left">Jméno a příjmení:</td>
+                                <td class="text-right">{{ user.getFirstName() }} {{ user.getLastName() }}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-6 text-left">E-mail:</td>
+                                <td class="text-right">{{ user.getEmail() }}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-8 text-left">Telefon hráč:</td>
+                                <td class="text-right">{% if user.getPhoneNumberPlayer() %}{{ user.getPhoneNumberPlayer() }}{% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-8 text-left">Telefon matka:</td>
+                                <td class="text-right">{% if user.getPhoneNumberMother() %}{{ user.getPhoneNumberMother() }}{% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-8 text-left">Telefon otec:</td>
+                                <td class="text-right">{% if user.getPhoneNumberFather() %}{{ user.getPhoneNumberFather() }}{% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-6 text-left">Adresa:</td>
+                                <td class="text-right">{% if user.getAddress() %}{{ user.getAddress() }}<br>
+                                        {{ user.getPostalCode() }} {{ user.getCity() }}{% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-6 text-left">Pokuty:</td>
+                                <td class="text-right">{% if user.getFines() %}{{ user.getFines() }}<br>
+                                    {% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td class="column medium-8 text-left">Číslo dresu:</td>
+                                <td class="text-right">{% if user.getDressNumber() %}{{ user.getDressNumber() }}<br>
+                                    {% else %}-{% endif %}</td>
+                            </tr>
+                        </tablebody>
+                    </table>
+                    <div class="text-center">
+                        <a href="{{ path('user-detail') }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                        &nbsp;
+                        <a href="{{ path('user-edit', {'userId': user.getId()}) }}" class="btn btn-primary" style="font-weight: bold">Upravit</a>
+                        &nbsp;
+                        <a href="{{ path('user-changePassword', {'userId': user.getId()}) }}" class="btn btn-danger" style="font-weight: bold">Změnit heslo</a>
+                    </div>
+                    <div class="cell large-3 medium-2"></div>
+                </div>
+                <div class="cell large-3 medium-2"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

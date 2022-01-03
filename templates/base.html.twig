@@ -1,19 +1,424 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <title>{% block title %}IS BBK Blansko{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Compressed CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+        <!-- Compressed JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+        <!-- foundation-float.min.css: Compressed CSS with legacy Float Grid -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-float.min.css" integrity="sha256-4ldVyEvC86/kae2IBWw+eJrTiwNEbUUTmN0zkP4luL4=" crossorigin="anonymous">
+        <!-- foundation-prototype.min.css: Compressed CSS with prototyping classes -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-prototype.min.css" integrity="sha256-BiKflOunI0SIxlTOOUCQ0HgwXrRrRwBkIYppEllPIok=" crossorigin="anonymous">
+        <!-- foundation-rtl.min.css: Compressed CSS with right-to-left reading direction -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-rtl.min.css" integrity="sha256-F+9Ns8Z/1ZISonBbojH743hsmF3x3AlQdJEeD8DhQsE=" crossorigin="anonymous">
+
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            {{ encore_entry_link_tags('main_css') }}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <style>
+
+            .app-dashboard {
+                height: 100vh;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-flex-direction: column;
+                -ms-flex-direction: column;
+                flex-direction: column;
+            }
+
+            .app-dashboard-body {
+                -webkit-flex: 1 1 auto;
+                -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+            .app-dashboard-top-nav-bar {
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                background: #2c3840;
+                height: 55px;
+                width: 100%;
+                -webkit-flex: 0 0 55px;
+                -ms-flex: 0 0 55px;
+                flex: 0 0 55px;
+            }
+
+            .app-dashboard-top-nav-bar .menu-icon {
+                vertical-align: text-bottom;
+            }
+
+            .app-dashboard-logo {
+                color: #fefefe;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            .app-dashboard-search-bar-container {
+                position: relative;
+            }
+
+            .app-dashboard-search {
+                background: #41525e;
+                border: 0;
+                margin-bottom: 0;
+                color: #fefefe;
+            }
+
+            .app-dashboard-search:active, .app-dashboard-search:focus {
+                background: #222b31;
+            }
+
+            .app-dashboard-search-icon {
+                position: absolute;
+                color: #fefefe;
+                right: 1rem;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
+
+            .app-dashboard-top-bar-actions {
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+            .app-dashboard-top-bar-actions button {
+                margin-bottom: 0;
+                margin-right: 2rem;
+            }
+
+            .app-dashboard-top-bar-actions button.hollow {
+                border-color: #fefefe;
+                color: #fefefe;
+            }
+
+            .app-dashboard-top-bar-actions button.hollow:hover {
+                background: #fefefe;
+                color: #1779ba;
+            }
+
+            .app-dashboard-top-bar-actions .fa-info-circle {
+                color: #fefefe;
+                font-size: 1.5rem;
+            }
+
+            .app-dashboard-sidebar {
+                background-color: #eebb6e;
+                height: 100%;
+                overflow-x: visible;
+                overflow-y: auto;
+                z-index: 1;
+                transition: all 0.5s ease;
+            }
+
+            .app-dashboard-sidebar .app-dashboard-open-sidebar, .app-dashboard-sidebar .app-dashboard-close-sidebar {
+                -webkit-align-items: baseline;
+                -ms-flex-align: baseline;
+                align-items: baseline;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-justify-content: space-between;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                padding: 2rem 1rem;
+            }
+
+            .app-dashboard-sidebar .app-dashboard-sidebar-close-button {
+                font-size: 14px;
+            }
+
+            .app-dashboard-sidebar .app-dashboard-sidebar-inner {
+                height: 100%;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a {
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+            }
+
+            .app-dashboard-sidebar .fa.large {
+                font-size: 1.5rem;
+                width: 40px;
+            }
+
+            .reveal-for-medium .app-dashboard-open-sidebar {
+                display: none;
+            }
+
+            .app-dashboard-sidebar-footer {
+                background: rgba(42, 57, 79, 0.8);
+                bottom: 0;
+                left: 0;
+                padding: 1rem;
+                position: absolute;
+                width: 100%;
+            }
+
+            .app-dashboard-open-sidebar {
+                text-align: center;
+            }
+
+            .app-dashboard-body-content {
+                transition: all 0.5s ease;
+                overflow-y: auto;
+                -webkit-flex: 1 1 0;
+                -ms-flex: 1 1 0px;
+                flex: 1 1 0;
+                padding: 20px;
+                background-color: #fefefe;
+            }
+
+            @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+                .app-dashboard.shrink-medium .app-dashboard-close-sidebar, .app-dashboard.shrink-medium .app-dashboard-sidebar-text {
+                    display: none;
+                }
+                .app-dashboard.shrink-medium .app-dashboard-open-sidebar {
+                    display: block;
+                }
+                .app-dashboard.shrink-medium .app-dashboard-sidebar {
+                    width: 80px;
+                }
+                .app-dashboard.shrink-medium .app-dashboard-sidebar .fa.large {
+                    width: auto;
+                }
+                .app-dashboard.shrink-medium .off-canvas-content {
+                    margin-left: 80px;
+                    width: calc(100% - 80px);
+                }
+                .app-dashboard.shrink-medium .navigation {
+                    margin-top: 2rem;
+                    text-align: center;
+                }
+                .app-dashboard.shrink-medium .menu.vertical > li > a {
+                    -webkit-justify-content: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                }
+                .app-dashboard.shrink-medium .menu li::after {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+                .app-dashboard.shrink-medium .menu li a {
+                    padding: 0.75rem;
+                }
+                .app-dashboard.shrink-medium .menu li a svg {
+                    margin: 0;
+                }
+                .app-dashboard.shrink-medium .menu li a span {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+            }
+
+            @media print, screen and (min-width: 64em) {
+                .app-dashboard.shrink-large .app-dashboard-close-sidebar, .app-dashboard.shrink-large .app-dashboard-sidebar-text {
+                    display: none;
+                }
+                .app-dashboard.shrink-large .app-dashboard-open-sidebar {
+                    display: block;
+                }
+                .app-dashboard.shrink-large .app-dashboard-sidebar {
+                    width: 80px;
+                }
+                .app-dashboard.shrink-large .app-dashboard-sidebar .fa.large {
+                    width: auto;
+                }
+                .app-dashboard.shrink-large .off-canvas-content {
+                    margin-left: 80px;
+                    width: calc(100% - 80px);
+                }
+                .app-dashboard.shrink-large .navigation {
+                    margin-top: 2rem;
+                    text-align: center;
+                }
+                .app-dashboard.shrink-large .menu.vertical > li > a {
+                    -webkit-justify-content: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                }
+                .app-dashboard.shrink-large .menu li::after {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+                .app-dashboard.shrink-large .menu li a {
+                    padding: 0.75rem;
+                }
+                .app-dashboard.shrink-large .menu li a svg {
+                    margin: 0;
+                }
+                .app-dashboard.shrink-large .menu li a span {
+                    display: none;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+            }
+
+
+        </style>
+
+
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('homepage') }}">Informační systém BBK Blansko</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" style="font-weight: bold; color: white">
+                    {% if is_granted('ROLE_PLAYER') or is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN')  %}
+                        {% if app.user.getCategoryId() == 1 %}
+                            Jsi přihlášený jako Admin
+                        {% elseif app.user.getCategoryId() == 2 %}
+                            Jsi přihlášený jako {{ app.user.getUsername() }}
+                        {% elseif app.user.getCategoryId() == 3 %}
+                            Jsi přihlášený jako {{ app.user.getUsername() }}
+                        {% elseif app.user.getCategoryId() == 4 %}
+                            Jsi přihlášený jako {{ app.user.getUsername() }}
+                        {% elseif app.user.getCategoryId() == 5 %}
+                            Jsi přihlášený jako {{ app.user.getUsername() }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </li>
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" style="text-align: center" href="{{ path('logout') }}">Odhlásit se</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="app-dashboard shrink-medium">
+        <div class="app-dashboard-body off-canvas-wrapper">
+            <div id="app-dashboard-sidebar"
+                 class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium" data-off-canvas>
+                <div class="app-dashboard-sidebar-inner">
+                    <ul class="menu vertical">
+                        <li class="nav-item text-center">
+                            <a class="nav-link active" href="{{ path('show-matches') }}" style="font-weight: bold">
+                                <span data-feather="matches"></span>
+                                Zápasy
+                            </a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COACH') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-attendance') }}" style="font-weight: bold">
+                                    <span data-feather="attendance"></span>
+                                    Docházka
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_PLAYER') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-attendance-user', {'userId': app.user.getId()}) }}" style="font-weight: bold">
+                                    <span data-feather="attendance"></span>
+                                    Docházka
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-club') }}" style="font-weight: bold">
+                                    <span data-feather="club"></span>
+                                    Klub
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_PLAYER') or is_granted('ROLE_COACH') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-team', {'userId': app.user.getId()}) }}" style="font-weight: bold">
+                                    <span data-feather="team"></span>
+                                    Tým
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_PLAYER') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-statistics-user', {'userId': app.user.getId()}) }}" style="font-weight: bold">
+                                    <span data-feather="statistics"></span>
+                                    Statistiky
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-statistics') }}" style="font-weight: bold">
+                                    <span data-feather="statistics"></span>
+                                    Statistiky
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item text-center">
+                                <a class="nav-link" href="{{ path('show-cars') }}" style="font-weight: bold">
+                                    <span data-feather="cars"></span>
+                                    Auta
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item text-center">
+                            <a class="nav-link" href="{{ path('user-detail') }}" style="font-weight: bold">
+                                <span data-feather="profile"></span>
+                                Profil
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+                <div class="section-header">
+                    <div class="row align-left">
+                        <div class="cell small-12 text-left">
+                            <h1>
+                                {% block header %}{% endblock %}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-container">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-light text-center text-lg-start" style="bottom: 0; width: 100%; position: fixed">
+        <!-- Copyright -->
+        <div class=" bg-dark text-center p-3" style="color: white">
+            © 2021 Copyright:
+            <a style="color: white" href="https://www.bbkblansko.cz/">BBK Blansko</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    {% block scripts %}
+    {% endblock %}
     </body>
 </html>

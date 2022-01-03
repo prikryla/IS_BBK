@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Pokuty {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row" style="width: 50%">
+            <h3>Nezaplacené pokuty</h3>
+            <table class="unstriped margin-top-1" id="table_fines">
+                <thead>
+                    <tr class="row align-center">
+                        <th class="column small-2 text-center">Kategorie</th>
+                        <th class="column small-2 text-center">Jméno</th>
+                        <th class="column small-2 text-center">Příjmení</th>
+                        <th class="column small-2 text-center">Pokuty</th>
+                    </tr>
+                </thead>
+                <tbody id="table_fines">
+                {% for user in users %}
+                    <tr class="row align-center" style="margin-top: 2px">
+                        {% if user.categoryId == 2 %}
+                            <td class="columns small-2 text-center">U12</td>
+                        {% elseif user.categoryId == 3 %}
+                            <td class="columns small-2 text-center">U15</td>
+                        {% elseif user.categoryId == 4 %}
+                            <td class="columns small-2 text-center">U17</td>
+                        {% elseif user.categoryId == 5 %}
+                            <td class="columns small-2 text-center">U19/U20</td>
+                        {% endif %}
+                        <td class="column small-2 text-center">{{ user.firstName }}</td>
+                        <td class="column small-2 text-center">{{ user.lastName }}</td>
+                        <td class="column small-2 text-center">{{ user.fines }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('show-club', {'userId': app.user.getId()}) }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                {% else %}
+                    <a href="{{ path('show-team', {'userId': app.user.getId()}) }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Statistiky hráči{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row" style="width: 60%">
+            <h2>Statistiky - hráči</h2>
+            <table class="unstriped margin-top-1" id="table_statistics">
+                <thead>
+                    <tr class="row align-center">
+                        <th class="column small-2 text-center">Kategorie</th>
+                        <th class="column small-2 text-center">Jméno</th>
+                        <th class="column small-2 text-center">Příjmení</th>
+                        <th class="column small-2 text-center">Možnosti</th>
+                    </tr>
+                </thead>
+                <tbody id="table_statistics">
+                {% for user in users %}
+                    <tr class="row align-center" style="margin-top: 2px">
+                        {% if user.categoryId == 2 %}
+                            <td class="columns small-2 text-center">U12</td>
+                        {% elseif user.categoryId == 3 %}
+                            <td class="columns small-2 text-center">U15</td>
+                        {% elseif user.categoryId == 4 %}
+                            <td class="columns small-2 text-center">U17</td>
+                        {% elseif user.categoryId == 5 %}
+                            <td class="columns small-2 text-center">U19/U20</td>
+                        {% elseif user.categoryId == 1 %}
+                            <td class="columns small-2 text-center">Admin</td>
+                        {% endif %}
+                        <td class="column small-2 text-center">{{ user.firstName }}</td>
+                        <td class="column small-2 text-center">{{ user.lastName }}</td>
+                        <td class="column small-2 text-center">
+                            <a href="{{ path('create-statistics-user', {'userId': user.id}) }}" style="font-weight: bold">Vytvořit statistiku</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a href="{{ path('show-team', {'userId': app.user.getId()}) }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

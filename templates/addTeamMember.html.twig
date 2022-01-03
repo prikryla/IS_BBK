@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Přidat hráče {% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3>Přidat nového hráče</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.username, {'label': 'Uživatelské jméno'}) }}
+
+                    {{ form_row(form.firstName, {'label': 'Jméno'}) }}
+
+                    {{ form_row(form.lastName, {'label': 'Příjmení'}) }}
+
+                    {{ form_row(form.email, {'label': 'Email'}) }}
+
+                    {{ form_row(form.address, {'label': 'Adresa'}) }}
+
+                    {{ form_row(form.city, {'label': 'Město'}) }}
+
+                    {{ form_row(form.postalCode, {'label': 'PSČ'}) }}
+
+                    {{ form_row(form.school, {'label': 'Škola'}) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.plainPassword.first, {'label': 'Heslo'}) }}
+
+                    {{ form_row(form.plainPassword.second, {'label': 'Heslo znovu'}) }}
+
+                    {{ form_row(form.dateOfBirth, {'label': 'Datum narození'}) }}
+
+                    {{ form_row(form.phoneNumberPlayer, {'label': 'Telefon hráč'}) }}
+
+                    {{ form_row(form.phoneNumberMother, {'label': 'Telefon matka'} )}}
+
+                    {{ form_row(form.phoneNumberFather, {'label': 'Telefon otec'}) }}
+
+                    {{ form_row(form.category, {'label': 'Kategorie'}) }}
+                </div>
+            </div>
+            <div class="text-center">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('show-club', {'userId': app.user.getId()})}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                    &nbsp;
+                {% endif %}
+                {% if is_granted('ROLE_COACH') or is_granted('ROLE_PLAYER') %}
+                    <a href="{{ path('show-team', {'userId': app.user.getId()})}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                    &nbsp;
+                {% endif %}
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

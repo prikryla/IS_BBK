@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Pokutovat hráče {% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h2>Pokutovat hráče {{ user.firstName }} {{ user.lastName }}</h2>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.fines)}}
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('user-detail-team', {'userId': userId})}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                &nbsp;
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

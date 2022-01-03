@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Docházka hráči{% endblock %}
+
+{% block body %}
+    <div class="container-fluid ">
+        <h3>Docházka - hráči</h3>
+        <a href="{{ path('show-all-attendance') }}" class="btn btn-primary btn-sm" style="font-weight: bold">Souhrn docházky</a>
+
+        <table class="unstriped margin-top-1" id="table_attendance">
+            <thead>
+                <tr class="row align-center">
+                    <th class="column small-2 text-center">Kategorie</th>
+                    <th class="column small-2 text-center">Jméno</th>
+                    <th class="column small-2 text-center ">Příjmení</th>
+                    <th class="column small-3 text-center">Datum narození</th>
+                    {% if is_granted('ROLE_COACH') or is_granted('ROLE_ADMIN') %}
+                        <th class="column small-2 text-center" style="margin-left: 5px">Možnosti</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody id="table_attendance">
+            {% for user in members %}
+                <tr class="row align-center" style="margin-top: 2px">
+                    {% if user.categoryId == 2 %}
+                        <td class="columns small-2 text-center">U12</td>
+                    {% elseif user.categoryId == 3 %}
+                        <td class="columns small-2 text-center">U15</td>
+                    {% elseif user.categoryId == 4 %}
+                        <td class="columns small-2 text-center">U17</td>
+                    {% elseif user.categoryId == 5 %}
+                        <td class="columns small-2 text-center">U19/U20</td>
+                    {% elseif user.categoryId == 1 %}
+                        <td class="columns small-2 text-center">Admin</td>
+                    {% endif %}
+                    <td class="column small-2 text-center">{{ user.firstName }}</td>
+                    <td class="column small-2 text-center">{{ user.lastName }}</td>
+                    <td class="column small-3 text-center">{{ user.dateOfBirth|date("d.m.Y") }}</td>
+
+                    <td class="column small-2 text-center">
+                        <a href="{{ path('add-attendance', {'userId': user.id}) }}" style="font-weight: bold">Zadat docházku</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

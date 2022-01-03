@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Zapsat docházku{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+            <h3>Uložit docházku</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+
+                <div class="cell medium-6">
+                    {{ form_row(form.date, {'attr': {'placeholder': 'den.měsíc.rok'}}) }}
+
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.attendanceCheck) }}
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('show-attendance') }}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                &nbsp;
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

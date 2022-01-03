@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Docházka hráče {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="cell large-12">
+            <h3>Docházka hráče {{ app.user.getUsername() }}</h3>
+            <table class="unstriped margin-top-1" id="table_attendance_user" style="width: 50%">
+                <thead>
+                    <tr class="row">
+                        <th class="column medium-7 text-center">Datum</th>
+                        <th class="column medium-3 text-center">Docházka</th>
+                    </tr>
+                </thead>
+                <tbody id="table_attendance_user">
+                {% for atd in attendance %}
+                    <tr class="row" style="margin-top: 2px">
+                        <td class="column medium-7 text-center">{{ atd.date }}</td>
+                        {% if atd.attendanceCheck == 1 %}
+                        <td class="column medium-3 text-center" style="color: green;font-weight: bold">Přítomen</td>
+                        {% endif %}
+                        {% if atd.attendanceCheck == 0 %}
+                            <td class="column medium-3 text-center" style="color: red;font-weight: bold">Nepřítomen</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

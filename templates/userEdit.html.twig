@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} IS BBK - Upravit profil{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="grid-container">
+        <h3>Upravit profil</h3>
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.username, {'label': 'Uživatelské jméno'}) }}
+
+                    {{ form_row(form.firstName, {'label': 'Jméno'}) }}
+
+                    {{ form_row(form.lastName, {'label': 'Příjmení'}) }}
+
+                    {{ form_row(form.email, {'label': 'Email'}) }}
+
+                    {{ form_row(form.address, {'label': 'Adresa'}) }}
+
+                    {{ form_row(form.city, {'label': 'Město'}) }}
+                </div>
+                <div class="cell medium-6">
+                    {{ form_row(form.postalCode, {'label': 'PSČ'}) }}
+
+                    {{ form_row(form.school, {'label': 'Škola'}) }}
+
+                    {{ form_row(form.phoneNumberPlayer, {'label': 'Telefon hráč'}) }}
+
+                    {{ form_row(form.phoneNumberMother, {'label': 'Telefon matka'} )}}
+
+                    {{ form_row(form.phoneNumberFather, {'label': 'Telefon otec'}) }}
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('user-detail')}}" class="btn btn-warning" style="font-weight: bold">Zpět</a>
+                &nbsp;
+                {{ form_widget(form.save, { 'label': 'Uložit změny', 'attr': { 'class': 'btn btn-success', 'style': 'font-weight: bold' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

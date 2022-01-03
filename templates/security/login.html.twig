@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js" lang="cs">
+<head>
+    <title>{% block title %}IS BBK - Úvod  {% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-12 my-auto">
+            <form class=" mx-auto" action="{{ path('login') }}" method="post" style="margin-top: 5em; width: 35%">
+                {% if app.user %}
+                    <div class="mb-3 text-center" style="border: 1px solid black; padding: 12px">
+                        Už jsi přihlášený pod uživatelským jménem {{ app.user.username }}<br><br><a href="{{ path('homepage') }}" style="font-weight: bold">Přejít na hlavní stranu</a><br>
+                        <a href="{{ path('logout') }}" style="font-weight: bold; color: red">Odhlásit </a>
+                    </div>
+                {% endif %}
+                <h1 class="h3 mb-3 font-weight-normal">IS BBK BLANSKO</h1>
+                <label for="inputUsername">Uživatelské jméno</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+
+                <label class="mt-2" for="inputPassword">Heslo</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button class="btn btn-lg btn-primary col-md-12 text-center" style="margin-top: 20px; font-weight: bold" type="submit">
+                    Přihlásit se
+                </button>
+
+                <a href="{{ path('user_registration') }}" class="btn btn-lg btn-warning col-md-12 text-center" style="margin-top: 20px; font-weight: bold">Registrovat se</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

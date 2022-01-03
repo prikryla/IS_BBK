@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "build-css": "^0.2.0",
+    "core-js": "^3.19.3",
+    "css": "^3.0.0",
+    "css-loader": "^6.5.1",
+    "foundation-sites": "^6.7.4",
+    "jquery": "^3.6.0",
+    "webpack": "^5.65.0",
+    "what-input": "^5.2.10"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.1",
+    "@symfony/stimulus-bridge": "^3.0.0",
+    "@symfony/webpack-encore": "^1.7.0",
+    "motion-ui": "^2.0.3",
+    "stimulus": "^3.0.1",
+    "webpack-notifier": "^1.6.0"
+  }
+}
